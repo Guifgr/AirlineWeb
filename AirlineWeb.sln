@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineWeb", "AirlineWeb\AirlineWeb.csproj", "{2DD13279-4853-4F49-ACE7-F9B69E85DA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineSendAgent", "AirlineSendAgent\AirlineSendAgent.csproj", "{B51124AF-522C-4391-9974-020734D8624B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgentWeb", "TravelAgentWeb\TravelAgentWeb.csproj", "{A1715999-AF73-4471-B51D-DE6CFA41E4F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DD13279-4853-4F49-ACE7-F9B69E85DA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DD13279-4853-4F49-ACE7-F9B69E85DA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DD13279-4853-4F49-ACE7-F9B69E85DA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DD13279-4853-4F49-ACE7-F9B69E85DA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B51124AF-522C-4391-9974-020734D8624B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B51124AF-522C-4391-9974-020734D8624B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B51124AF-522C-4391-9974-020734D8624B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B51124AF-522C-4391-9974-020734D8624B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1715999-AF73-4471-B51D-DE6CFA41E4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1715999-AF73-4471-B51D-DE6CFA41E4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1715999-AF73-4471-B51D-DE6CFA41E4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1715999-AF73-4471-B51D-DE6CFA41E4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
