@@ -17,10 +17,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers" />
-      <Folder Include="Dtos" />
-      <Folder Include="Profiles" />
-    </ItemGroup>
-
 </Project>
