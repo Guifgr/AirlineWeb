@@ -1,4 +1,5 @@
 using AirlineWeb.Dtos;
+using AirlineWeb.Dtos.WebhookSubscription;
 using AirlineWeb.Models;
 using AutoMapper;
 

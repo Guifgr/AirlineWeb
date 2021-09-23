@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AirlineWeb.Dtos
+namespace AirlineWeb.Dtos.WebhookSubscription
 {
     public class WebhookSubscriptionCreateDto
     {
