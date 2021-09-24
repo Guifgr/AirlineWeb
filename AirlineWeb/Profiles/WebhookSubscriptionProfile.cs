@@ -1,7 +1,7 @@
-using AirlineWeb.Dtos;
-using AirlineWeb.Dtos.WebhookSubscription;
-using AirlineWeb.Models;
+
 using AutoMapper;
+using AirlineWeb.Dtos;
+using AirlineWeb.Models;
 
 namespace AirlineWeb.Profiles
 {
@@ -9,8 +9,10 @@ namespace AirlineWeb.Profiles
     {
         public WebhookSubscriptionProfile()
         {
+            //Source -> Target
             CreateMap<WebhookSubscriptionCreateDto, WebhookSubscription>();
             CreateMap<WebhookSubscription, WebhookSubscriptionReadDto>();
+            
         }
     }
 }

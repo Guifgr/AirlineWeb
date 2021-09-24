@@ -9,23 +9,42 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineWeb.Migrations
 {
     [DbContext(typeof(AirlineDbContext))]
-    [Migration("20210716134311_WebhookInitialMigration")]
-    partial class WebhookInitialMigration
+    [Migration("20210924211352_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
+
+            modelBuilder.Entity("AirlineWeb.Models.FlightDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("FlightCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FlightDetails");
+                });
 
             modelBuilder.Entity("AirlineWeb.Models.WebhookSubscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Secret")
                         .IsRequired()
@@ -39,7 +58,7 @@ namespace AirlineWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebhookUri")
+                    b.Property<string>("WebhookURI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

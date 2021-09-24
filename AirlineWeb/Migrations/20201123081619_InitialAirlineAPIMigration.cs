@@ -1,30 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TravelAgentWeb.Migrations
+namespace AirlineWeb.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialAirlineAPIMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "WebhookSecrets",
+                name: "FlightDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Secret = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Publisher = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FlightCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebhookSecrets", x => x.Id);
+                    table.PrimaryKey("PK_FlightDetails", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "WebhookSecrets");
+                name: "FlightDetails");
         }
     }
 }

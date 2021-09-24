@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TravelAgentWeb.Model;
+using TravelAgentWeb.Models;
 
 namespace TravelAgentWeb.Data
 {
@@ -9,7 +9,7 @@ namespace TravelAgentWeb.Data
         {
             
         }
-        
-        public DbSet<WebhookSecret> WebhookSecrets { get; set; }
+
+        public DbSet<WebhookSecret> SubscriptionSecrets { get; set; }
     }
 }

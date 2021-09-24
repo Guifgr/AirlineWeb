@@ -25,18 +25,19 @@ namespace TravelAgentWeb
 
         public IConfiguration Configuration { get; }
 
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TravelAgentDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("TravelAgentConnection")));
-            
+            services.AddDbContext<TravelAgentDbContext>(opt => opt.UseSqlServer
+                (Configuration.GetConnectionString("TravelAgentConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "TravelAgentWeb", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelAgentWeb", Version = "v1" });
             });
         }
 
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -52,7 +53,10 @@ namespace TravelAgentWeb
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

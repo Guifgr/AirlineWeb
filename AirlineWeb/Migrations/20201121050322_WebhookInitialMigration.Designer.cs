@@ -9,23 +9,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineWeb.Migrations
 {
     [DbContext(typeof(AirlineDbContext))]
-    [Migration("20210922193355_initial")]
-    partial class initial
+    [Migration("20201121050322_WebhookInitialMigration")]
+    partial class WebhookInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("AirlineWeb.Models.WebhookSubscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Secret")
                         .IsRequired()
@@ -39,7 +39,7 @@ namespace AirlineWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebhookUri")
+                    b.Property<string>("WebhookURI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

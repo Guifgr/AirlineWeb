@@ -1,4 +1,5 @@
-using AirlineWeb.Dtos.FlightDetails;
+
+using AirlineWeb.Dtos;
 using AirlineWeb.Models;
 using AutoMapper;
 
@@ -8,9 +9,11 @@ namespace AirlineWeb.Profiles
     {
         public FlightDetailProfile()
         {
+            //Source -> Target
             CreateMap<FlightDetail, FlightDetailReadDto>();
             CreateMap<FlightDetailCreateDto, FlightDetail>();
             CreateMap<FlightDetailUpdateDto, FlightDetail>();
         }
+        
     }
 }

@@ -14,16 +14,16 @@ namespace TravelAgentWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("TravelAgentWeb.Model.WebhookSecret", b =>
+            modelBuilder.Entity("TravelAgentWeb.Models.WebhookSecret", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Publisher")
                         .IsRequired()
@@ -35,7 +35,7 @@ namespace TravelAgentWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WebhookSecrets");
+                    b.ToTable("SubscriptionSecrets");
                 });
 #pragma warning restore 612, 618
         }

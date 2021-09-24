@@ -1,12 +1,14 @@
 using System;
-using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TravelAgentWeb.Data;
 using TravelAgentWeb.Dtos;
+using TravelAgentWeb.Models;
 
 namespace TravelAgentWeb.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class NotificationsController : ControllerBase
     {
         private readonly TravelAgentDbContext _context;
@@ -16,27 +18,42 @@ namespace TravelAgentWeb.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> FlightChanges(FlightDetailUpdateDto flightDetailUpdateDto)
+        [HttpPost("secret")]
+        public ActionResult AddSecret(WebhookSecretDto dto)
         {
-            Console.WriteLine($"Webhook Received from: {flightDetailUpdateDto.Publisher}");
+            _context.SubscriptionSecrets.Add(new WebhookSecret()
+            {
+                Publisher = dto.Publisher,
+                Secret = dto.Secret
+            });
+            _context.SaveChanges();
+            return Ok();
+        }
 
-            var secretModel =
-                await _context.WebhookSecrets.FirstOrDefaultAsync(s => 
-                    s.Publisher == flightDetailUpdateDto.Publisher &&
-                    s.Secret == flightDetailUpdateDto.Secret);
-            if (secretModel == default)
+        [HttpPost]
+        public ActionResult FlightChanged(FlightDetailUpdateDto flightDetailUpdateDto)
+        {
+            Console.WriteLine($"Webhook Receieved from: {flightDetailUpdateDto.Publisher}");
+
+            var secretModel = _context.SubscriptionSecrets.FirstOrDefault(s => 
+                s.Publisher == flightDetailUpdateDto.Publisher && 
+                s.Secret == flightDetailUpdateDto.Secret);
+
+            if (secretModel == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Invalid Secret {flightDetailUpdateDto.Secret} - ignore Webhook");
+                Console.WriteLine("Invalid Secret - Ignore Webwook");
                 Console.ResetColor();
-                return BadRequest();
+                return Ok();
             }
+
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Valid Secret {flightDetailUpdateDto.Secret}");
-            Console.WriteLine($"Old price {flightDetailUpdateDto.OldPrice}, New Price {flightDetailUpdateDto.NewPrice}");
+            Console.WriteLine("Valid Webhook!");
+            Console.WriteLine($"Old Price {flightDetailUpdateDto.OldPrice}, New Price {flightDetailUpdateDto.NewPrice}");
             Console.ResetColor();
             return Ok();
         }
+        
+
     }
 }
