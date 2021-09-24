@@ -2,30 +2,36 @@ using System;
 using System.Threading.Tasks;
 using AirlineWeb.Data;
 using AirlineWeb.Dtos.FlightDetails;
+using AirlineWeb.Dtos.Notification;
+using AirlineWeb.MessageBus;
 using AirlineWeb.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirlineWeb.Controllers
 {
-    [Route("api/[Controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FlightsController : ControllerBase
     {
         private readonly AirlineDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IMessageBusClient _messageBusClient;
 
-        public FlightsController(AirlineDbContext context, IMapper mapper)
+        public FlightsController(AirlineDbContext context, IMapper mapper, IMessageBusClient messageBusClient)
         {
             _context = context;
             _mapper = mapper;
+            _messageBusClient = messageBusClient;
         }
 
         [HttpGet("flightCode", Name = "GetFlightDetailByCode")]
         public async Task<ActionResult<FlightDetailReadDto>> GetFlightDetailByCode(string flightCode)
         {
             var flightDetail = await _context.FlightDetails.FirstOrDefaultAsync(f => f.FlightCode == flightCode);
+            
             if (flightCode == default) return NotFound();
 
             return Ok(_mapper.Map<FlightDetailReadDto>(flightDetail));
@@ -50,16 +56,33 @@ namespace AirlineWeb.Controllers
             return CreatedAtRoute(nameof(GetFlightDetailByCode), new{flightCode = flightDetailReadDto.FlightCode }, flightDetailReadDto);
         }
         
-        [HttpPut("{flightId}")]
+        [HttpPut("{flightId:int}")]
         public async Task<ActionResult<FlightDetailReadDto>> CreateFlight(int flightId, FlightDetailUpdateDto flightDetailUpdateDto)
         {
             var flightDetail = await _context.FlightDetails.FirstOrDefaultAsync(f => f.Id == flightId);
             if (flightDetail == default) return NoContent();
             try
             {
-                flightDetail.FlightCode = flightDetailUpdateDto.FlightCode;
-                flightDetail.Price = flightDetailUpdateDto.Price;
-                await _context.SaveChangesAsync();
+                if (flightDetail.Price != flightDetailUpdateDto.Price)
+                {
+                    var message = new NotificationMessageDto()
+                    {
+                        WebhookType = "pricechange",
+                        OldPrice = flightDetail.Price,
+                        NewPrice = flightDetailUpdateDto.Price,
+                        FlightCode = flightDetail.FlightCode
+                    };
+                    
+                    flightDetail.FlightCode = flightDetailUpdateDto.FlightCode;
+                    flightDetail.Price = flightDetailUpdateDto.Price;
+                    await _context.SaveChangesAsync();
+                    
+                    _messageBusClient.SendMessage(message);
+                }
+                else
+                {
+                    Console.WriteLine("No price change");
+                }
             }
             catch (Exception e)
             {

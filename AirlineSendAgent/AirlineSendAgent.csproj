@@ -19,4 +19,12 @@
       <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="appsettings.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
